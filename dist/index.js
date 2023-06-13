@@ -13422,7 +13422,7 @@ const rest_1 = __nccwpck_require__(4007);
         if (bodyPath !== '' && !!bodyPath) {
             bodyFileContent = fs_extra_1.default.readFileSync(bodyPath, { encoding: 'utf8' });
         }
-        const { data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl, draft: draftStatus } } = yield octokit.repos.createRelease({
+        const { data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl } } = yield octokit.repos.createRelease({
             owner,
             repo,
             tag_name: tagName,
@@ -13431,14 +13431,12 @@ const rest_1 = __nccwpck_require__(4007);
             draft,
             prerelease
         });
-        if (!draftStatus) {
-            yield octokit.repos.updateRelease({
-                owner,
-                repo,
-                release_id: releaseId,
-                draft: true
-            });
-        }
+        yield octokit.repos.updateRelease({
+            owner,
+            repo,
+            release_id: releaseId,
+            draft: false
+        });
         core.setOutput('id', releaseId);
         core.setOutput('html_url', htmlUrl);
         core.setOutput('upload_url', uploadUrl);

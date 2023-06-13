@@ -34,8 +34,7 @@ import { Octokit } from '@octokit/rest';
       data: {
         id: releaseId,
         html_url: htmlUrl,
-        upload_url: uploadUrl,
-        draft: draftStatus
+        upload_url: uploadUrl
       }
     } = await octokit.repos.createRelease({
       owner,
@@ -47,14 +46,12 @@ import { Octokit } from '@octokit/rest';
       prerelease
     });
 
-    if (!draftStatus) {
-      await octokit.repos.updateRelease({
-        owner,
-        repo,
-        release_id: releaseId,
-        draft: true
-      });
-    }
+    await octokit.repos.updateRelease({
+      owner,
+      repo,
+      release_id: releaseId,
+      draft: false
+    });
 
     core.setOutput('id', releaseId);
     core.setOutput('html_url', htmlUrl);
