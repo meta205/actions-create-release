@@ -1,0 +1,37 @@
+name: 'GitHub Action for deleting a GitHub Release'
+description: 'This is a GitHub Action for deleting a GitHub Release.'
+
+branding:
+  icon: delete
+  color: 'blue'
+
+inputs:
+  owner:
+    description: 'The owner of github'
+    required: false
+  repo:
+    description: 'The repo of github'
+    required: false
+  release-name:
+    description: 'The release name of github'
+    required: false
+  tag-name:
+    description: 'The tag name of github'
+    required: false
+  body:
+    description: 'Text describing the contents of the tag'
+    required: false
+  body-path:
+    description: 'A file path describing the content of the tag'
+    required: false
+  draft:
+    description: 'Draft release option'
+    required: false
+    default: false
+  prerelease:
+    description: 'Prerelease option'
+    required: false
+    default: false
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
