@@ -25,9 +25,11 @@ import { Octokit } from '@octokit/rest';
       repo = repoInfo[1];
     }
 
-    let bodyFileContent: any = null;
+    let releaseContent: any;
     if (bodyPath !== '' && !!bodyPath) {
-      bodyFileContent = fs.readFileSync(bodyPath, { encoding: 'utf8' });
+      releaseContent = fs.readFileSync(bodyPath, { encoding: 'utf8' });
+    } else {
+      releaseContent = body;
     }
 
     const {
@@ -41,21 +43,23 @@ import { Octokit } from '@octokit/rest';
       repo,
       tag_name: tagName,
       name: releaseName,
-      body: bodyFileContent || body,
+      body: releaseContent,
       draft,
       prerelease
     });
 
-    await octokit.repos.updateRelease({
-      owner,
-      repo,
-      release_id: releaseId,
-      draft: false
-    });
+    if (!draft) {
+      await octokit.repos.updateRelease({
+        owner,
+        repo,
+        release_id: releaseId,
+        draft: false
+      });
+    }
 
     core.setOutput('id', releaseId);
-    core.setOutput('html_url', htmlUrl);
-    core.setOutput('upload_url', uploadUrl);
+    core.setOutput('html-url', htmlUrl);
+    core.setOutput('upload-url', uploadUrl);
   } catch (err: any) {
     core.setFailed(err.message);
   }
