@@ -1,5 +1,5 @@
-name: 'GitHub Action for deleting a GitHub Release'
-description: 'This is a GitHub Action for deleting a GitHub Release.'
+name: 'GitHub Action for creating a GitHub Release'
+description: 'This is a GitHub Action for creating a GitHub Release.'
 
 branding:
   icon: upload
