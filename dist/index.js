@@ -13418,28 +13418,33 @@ const rest_1 = __nccwpck_require__(4007);
             owner = repoInfo[0];
             repo = repoInfo[1];
         }
-        let bodyFileContent = null;
+        let releaseContent;
         if (bodyPath !== '' && !!bodyPath) {
-            bodyFileContent = fs_extra_1.default.readFileSync(bodyPath, { encoding: 'utf8' });
+            releaseContent = fs_extra_1.default.readFileSync(bodyPath, { encoding: 'utf8' });
+        }
+        else {
+            releaseContent = body;
         }
         const { data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl } } = yield octokit.repos.createRelease({
             owner,
             repo,
             tag_name: tagName,
             name: releaseName,
-            body: bodyFileContent || body,
+            body: releaseContent,
             draft,
             prerelease
         });
-        yield octokit.repos.updateRelease({
-            owner,
-            repo,
-            release_id: releaseId,
-            draft: false
-        });
+        if (!draft) {
+            yield octokit.repos.updateRelease({
+                owner,
+                repo,
+                release_id: releaseId,
+                draft: false
+            });
+        }
         core.setOutput('id', releaseId);
-        core.setOutput('html_url', htmlUrl);
-        core.setOutput('upload_url', uploadUrl);
+        core.setOutput('html-url', htmlUrl);
+        core.setOutput('upload-url', uploadUrl);
     }
     catch (err) {
         core.setFailed(err.message);
