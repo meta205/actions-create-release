@@ -10,11 +10,11 @@ import { Octokit } from '@octokit/rest';
 
     let owner: string = core.getInput('owner');
     let repo: string = core.getInput('repo');
-    let releaseName: string = core.getInput('release-name');
-    let tagName: string = core.getInput('tag-name');
+    let releaseName: string = core.getInput('release_name');
+    let tagName: string = core.getInput('tag_name');
 
     let body: string = core.getInput('body');
-    let bodyPath: string = core.getInput('body-path');
+    let bodyPath: string = core.getInput('body_path');
 
     const draft: boolean = core.getInput('draft') === 'true';
     const prerelease: boolean = core.getInput('prerelease') === 'true';
@@ -58,8 +58,8 @@ import { Octokit } from '@octokit/rest';
     }
 
     core.setOutput('id', releaseId);
-    core.setOutput('html-url', htmlUrl);
-    core.setOutput('upload-url', uploadUrl);
+    core.setOutput('html_url', htmlUrl);
+    core.setOutput('upload_url', uploadUrl);
   } catch (err: any) {
     core.setFailed(err.message);
   }

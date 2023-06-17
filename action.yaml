@@ -12,16 +12,16 @@ inputs:
   repo:
     description: 'The repo of github'
     required: false
-  release-name:
+  release_name:
     description: 'The release name of github'
     required: false
-  tag-name:
+  tag_name:
     description: 'The tag name of github'
     required: false
   body:
     description: 'Content of the release'
     required: false
-  body-path:
+  body_path:
     description: 'Content path of the release'
     required: false
   draft:
@@ -36,9 +36,9 @@ inputs:
 outputs:
   id:
     description: 'The id of the created release'
-  html-url:
+  html_url:
     description: 'The url to view the release'
-  upload-url:
+  upload_url:
     description: 'The url for uploading assets to the release'
 
 runs:
