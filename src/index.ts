@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import * as core from '@actions/core';
-import { Octokit } from '@octokit/rest';
+import {Octokit} from '@octokit/rest';
 
 (async (): Promise<void> => {
   try {
@@ -47,15 +47,6 @@ import { Octokit } from '@octokit/rest';
       draft,
       prerelease
     });
-
-    if (!draft) {
-      await octokit.repos.updateRelease({
-        owner,
-        repo,
-        release_id: releaseId,
-        draft: false
-      });
-    }
 
     core.setOutput('id', releaseId);
     core.setOutput('html_url', htmlUrl);
